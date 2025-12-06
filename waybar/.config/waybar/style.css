@@ -292,6 +292,7 @@ tooltip {
 #custom-tasks:hover {
   background: rgba(137, 180, 250, 0.1);
   color: #f5c2e7;
+  font-size: 18px;
 }
 
 #custom-tasks.empty {

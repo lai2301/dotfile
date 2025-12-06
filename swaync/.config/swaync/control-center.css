@@ -34,7 +34,19 @@
   padding: 12px;
 
   /* Pulsing border animation */
-  animation: pulse-border 3s ease-in-out infinite;
+  animation: pulse-border 3s ease-in-out infinite, slide-down 0.3s ease-out;
+}
+
+/* Slide down animation */
+@keyframes slide-down {
+  from {
+    margin-top: -100%;
+    opacity: 0;
+  }
+  to {
+    margin-top: 18px;
+    opacity: 1;
+  }
 }
 
 /* Define the pulsing animation */
