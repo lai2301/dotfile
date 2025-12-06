@@ -307,8 +307,28 @@ func sortTasks(tasks []*Task, sortBy string) {
 func buildTooltip(tasks []*Task) string {
 	var builder strings.Builder
 
-	builder.WriteString("<b>📋 Task List</b>\n")
-	builder.WriteString("━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n")
+	// STYLING CONFIGURATION - Customize colors and appearance here
+	// Use Pango markup: https://docs.gtk.org/Pango/pango_markup.html
+	const (
+		headerColor    = "#f5c2e7" // Pink - main header
+		taskNameColor  = "#89b4fa" // Blue - task names
+		metadataColor  = "#cdd6f4" // Light gray - metadata text
+		progressColor  = "#a6e3a1" // Green - progress info
+		separatorColor = "#6c7086" // Dim gray - separators
+		hintColor      = "#89b4fa" // Blue - footer hints
+
+		// Pango size units: 'xx-small', 'x-small', 'small', 'medium', 'large', 'x-large', 'xx-large'
+		// Or use absolute sizes like '12000' (12pt * 1000)
+		headerSize   = "15pt" // Header font size
+		taskNameSize = "12pt" // Task name font size
+		metadataSize = "10pt" // Metadata font size
+	)
+
+	// Header with custom styling
+	builder.WriteString(fmt.Sprintf("<span size='%s' weight='bold' foreground='%s'>📋 Task List</span>\n",
+		headerSize, headerColor))
+	builder.WriteString(fmt.Sprintf("<span foreground='%s'>━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>\n\n",
+		separatorColor))
 
 	// Show up to 8 most recent tasks
 	count := 0
@@ -324,34 +344,42 @@ func buildTooltip(tasks []*Task) string {
 			displayName = displayName[:37] + "..."
 		}
 
-		// Determine status indicator
+		// Determine status indicator and color
 		statusIcon := "📄"
+		taskColor := taskNameColor
 		if task.Total > 0 {
 			if task.Incomplete == 0 {
 				statusIcon = "✅"
+				taskColor = progressColor // Green for completed
 			} else if task.Incomplete > 0 {
 				statusIcon = "⏳"
+				taskColor = taskNameColor // Blue for in-progress
 			}
 		}
 
-		builder.WriteString(fmt.Sprintf("%s <b>%s</b>\n", statusIcon, displayName))
+		// Task name with custom color and size
+		builder.WriteString(fmt.Sprintf("%s <span size='%s' weight='bold' foreground='%s'>%s</span>\n",
+			statusIcon, taskNameSize, taskColor, displayName))
 
-		// Show metadata
+		// Show metadata with custom styling
 		if task.Ticket != "" {
-			builder.WriteString(fmt.Sprintf("   Ticket: %s", task.Ticket))
+			builder.WriteString(fmt.Sprintf("   <span size='%s' foreground='%s'>Ticket: %s</span>",
+				metadataSize, metadataColor, task.Ticket))
 			if task.Date != "" {
-				builder.WriteString(fmt.Sprintf(" | Date: %s", task.Date))
+				builder.WriteString(fmt.Sprintf(" <span foreground='%s'>|</span> <span size='%s' foreground='%s'>Date: %s</span>",
+					separatorColor, metadataSize, metadataColor, task.Date))
 			}
 			builder.WriteString("\n")
 		} else if task.Date != "" {
-			builder.WriteString(fmt.Sprintf("   Date: %s\n", task.Date))
+			builder.WriteString(fmt.Sprintf("   <span size='%s' foreground='%s'>Date: %s</span>\n",
+				metadataSize, metadataColor, task.Date))
 		}
 
 		// Show todo progress if available
 		if task.Total > 0 {
-			builder.WriteString(fmt.Sprintf("   Progress: %d/%d todos (%d%%)\n",
-				task.Total-task.Incomplete, task.Total,
-				(task.Total-task.Incomplete)*100/task.Total))
+			percentage := (task.Total - task.Incomplete) * 100 / task.Total
+			builder.WriteString(fmt.Sprintf("   <span size='%s' foreground='%s'>Progress: %d/%d todos (%d%%)</span>\n",
+				metadataSize, progressColor, task.Total-task.Incomplete, task.Total, percentage))
 		}
 
 		builder.WriteString("\n")
@@ -359,11 +387,14 @@ func buildTooltip(tasks []*Task) string {
 	}
 
 	if count == 0 {
-		builder.WriteString("<i>No tasks found! 🎉</i>\n")
+		builder.WriteString(fmt.Sprintf("<span foreground='%s'><i>No tasks found! 🎉</i></span>\n",
+			progressColor))
 	}
 
-	builder.WriteString("━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n")
-	builder.WriteString("<i>Click to view details</i>")
+	builder.WriteString(fmt.Sprintf("<span foreground='%s'>━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>\n",
+		separatorColor))
+	builder.WriteString(fmt.Sprintf("<span size='%s' foreground='%s'><i>Click to view details</i></span>",
+		metadataSize, hintColor))
 
 	return builder.String()
 }

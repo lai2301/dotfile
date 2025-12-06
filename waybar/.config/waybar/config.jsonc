@@ -49,7 +49,7 @@
   },
   "custom/notification": {
     "tooltip": true,
-    "format": "<span size='16pt'>{icon}</span>",
+    "format": "<span size='12pt'>{icon}</span>",
     "format-icons": {
       "notification": "󱅫",
       "none": "󰂜",
@@ -106,7 +106,7 @@
     "tooltip": true,
     "on-click": "omarchy-launch-floating-terminal-with-presentation $HOME/.config/waybar/script/show-tasks.sh",
     "on-click-right": "omarchy-launch-floating-terminal-with-presentation omarchy-tz-select",
-    "tooltip-format": "<tt>{calendar}</tt>",
+    "tooltip-format": "<span size='15pt'>{calendar}</span>",
     "calendar": {
     "mode": "month",
     "weeks-pos": "right",
@@ -293,8 +293,8 @@
     "tooltip": true,
     "on-click": "omarchy-launch-floating-terminal-with-presentation $HOME/.config/waybar/script/show-tasks.sh",
     "on-click-right": "omarchy-launch-floating-terminal-with-presentation omarchy-tz-select",
-    "tooltip-format": "<tt>{calendar}</tt>",
-      "calendar": {
+    "tooltip-format": "n<span size='15pt'>{calendar}</span>",
+    "calendar": {
     "mode": "month",
     "weeks-pos": "right",
     "format": {
