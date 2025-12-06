@@ -1,0 +1,18 @@
+{
+  "tasksDirectory": "$HOME/Documents/lai_vault/000 Tasks",
+  "colors": {
+    "header": "#f5c2e7",
+    "taskName": "#89b4fa",
+    "metadata": "#cdd6f4",
+    "progress": "#a6e3a1",
+    "separator": "#6c7086",
+    "hint": "#89b4fa"
+  },
+  "sizes": {
+    "header": "15pt",
+    "taskName": "12pt",
+    "metadata": "10pt"
+  },
+  "maxTasks": 8
+}
+
