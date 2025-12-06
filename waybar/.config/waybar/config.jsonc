@@ -46,10 +46,7 @@
     "active-first": true,
     "tooltip-format": "{name}",
     "on-click": "activate",
-    "on-click-middle": "close",
-    "ignore-list": [
-      "com.mitchellh.ghostty"
-    ]
+    "on-click-middle": "close"
   },
   "custom/notification": {
     "tooltip": true,
@@ -107,8 +104,19 @@
   },
   "clock": {
     "format": "{:L%d %B W%V %Y %A %H:%M}",
-    "tooltip": false,
-    "on-click-right": "omarchy-launch-floating-terminal-with-presentation omarchy-tz-select"
+    "tooltip": true,
+    "on-click-right": "omarchy-launch-floating-terminal-with-presentation omarchy-tz-select",
+    "tooltip-format": "<tt>{calendar}</tt>",
+    "calendar": {
+    "mode": "month",
+    "weeks-pos": "right",
+    "format": {
+      "months":   "<span color='#ff6699'><b>{}</b></span>",
+      "days":     "<span color='#cdd6f4'><b>{}</b></span>",
+      "weekdays": "<span color='#89b4fa'><b>{}</b></span>",
+      "today":    "<span color='#f38ba8'><b><u>{}</u></b></span>"
+      }
+    }
   },
   "network": {
     "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
@@ -236,10 +244,6 @@
     "on-click": "activate",
     "icon-size": "12",
     "on-click-middle": "close"
-      /*
-    "ignore-list": [
-      "com.mitchellh.ghostty"
-    ]*/
   },
   "custom/omarchy": {
     "format": "<span font='omarchy'>\ue900</span>",
