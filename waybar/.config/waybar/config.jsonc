@@ -104,7 +104,7 @@
   "clock": {
     "format": "{:L%d %B W%V %Y %A %H:%M}",
     "tooltip": true,
-    "on-click": "omarchy-launch-floating-terminal-with-presentation $HOME/.config/waybar/script/show-tasks.sh",
+    "on-click": "omarchy-launch-floating-terminal-with-presentation WaybarObsidainTask -display -config=$HOME/.config/waybar/custom-task-config.json",
     "on-click-right": "omarchy-launch-floating-terminal-with-presentation omarchy-tz-select",
     "tooltip-format": "<span size='15pt'>{calendar}</span>",
     "calendar": {
@@ -203,7 +203,9 @@
   },
   "custom/gpu": {
     "exec": "$HOME/.config/waybar/script/gpu-amdgpu_top.sh",
+    "on-click": "omarchy-launch-floating-terminal-with-presentation amdgpu_top",
     "format": " {}",
+    "return-type": "json",
     "interval": 10,                    // update every 2 seconds (adjust as you like)
     "tooltip": true
   },
@@ -292,7 +294,7 @@
   "clock": {
     "format": "{:L%d %B W%V %Y %A %H:%M}",
     "tooltip": true,
-    "on-click": "omarchy-launch-floating-terminal-with-presentation $HOME/script/show-tasks.sh",
+    "on-click": "omarchy-launch-floating-terminal-with-presentation WaybarObsidainTask -display -config=$HOME/.config/waybar/custom-task-config.json",
     "on-click-right": "omarchy-launch-floating-terminal-with-presentation omarchy-tz-select",
     "tooltip-format": "n<span size='15pt'>{calendar}</span>",
     "calendar": {
