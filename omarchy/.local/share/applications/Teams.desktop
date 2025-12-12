@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Name=Teams
+Comment=Teams with PWA
+Exec=omarchy-launch-webapp https://teams.microsoft.com/v2/
+Terminal=false
+Type=Application
+Icon=/home/lai2301/.local/share/applications/icons/microsoft-teams.png
+StartupNotify=true

@@ -10,8 +10,9 @@
   "modules-right": [
     "group/tray-expander",
     "bluetooth",
-    "network",
     "pulseaudio",
+    "network",
+    "custom/external-ip",
     "cpu",
     "memory",
     "custom/gpu",
@@ -41,11 +42,15 @@
   },
   "wlr/taskbar": {
     "format": "{icon}",
+    "icon-size": 16,
     "all-outputs": false,
     "active-first": true,
     "tooltip-format": "{name}",
     "on-click": "activate",
-    "on-click-middle": "close"
+    "on-click-middle": "close",
+    "app_ids-mapping": {
+      "chrome-teams.microsoft.com__v2_-Profile_2": "teams"
+    }
   },
   "custom/notification": {
     "tooltip": true,
@@ -74,7 +79,7 @@
     "tooltip-format": "Omarchy Menu\n\nSuper + Alt + Space"
   },
   "custom/update": {
-    "format": "",
+    "format": "Update",
     "exec": "omarchy-update-available",
     "on-click": "omarchy-launch-floating-terminal-with-presentation omarchy-update",
     "tooltip-format": "Omarchy update available",
@@ -86,6 +91,7 @@
     "format": "MEM:{}%",
     "tooltip": true,
     "tooltip-format": "Memory Usage:{used} / {total} ({percentage}%)",
+    "on-click": "omarchy-launch-floating-terminal-with-presentation top -c -e m -o RES",
     "max-length": 10
   },
   "cpu": {
@@ -124,10 +130,27 @@
     "exec": "WaybarObsidainTask -sort=lastmod -config=$HOME/.config/waybar/custom-task-config.json",
     "on-click": "omarchy-launch-floating-terminal-with-presentation WaybarObsidainTask -display -config=$HOME/.config/waybar/custom-task-config.json",
     "interval": 300,
-    "tooltip": true
+    "tooltip": true,
+    "rewrite": {
+      
+    }
     // Sort options: lastmod, date, ticket, name, progress
     // Config: ~/.config/waybar/custom-task-config.json
   },
+  "network": {
+    "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
+    "format": "{icon}",
+    "format-wifi": "{icon}",
+    "format-ethernet": "󰀂 ⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
+    "format-disconnected": "󰤮",
+    "tooltip-format-wifi": "{essid} ({frequency} GHz)\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
+    "tooltip-format-ethernet": "{ipaddr}/{cidr}",
+    "tooltip-format-disconnected": "Disconnected",
+    "interval": 3,
+    "spacing": 1,
+    "on-click": "omarchy-launch-wifi"
+  },
+  /*
   "network": {
     "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
     "format": "{icon}",
@@ -140,7 +163,7 @@
     "interval": 3,
     "spacing": 1,
     "on-click": "omarchy-launch-wifi"
-  },
+  },*/
   "battery": {
     "format": "{capacity}% {icon}",
     "format-discharging": "{icon}",
@@ -197,6 +220,19 @@
     "signal": 8,
     "return-type": "json"
   },
+  "custom/teams-screen-sharing-indication": {
+    "exec": "$HOME/.config/waybar/script/teams-screenshare.sh",
+    "signal": 8,
+    "return-type": "json",
+    "interval": 5
+  },
+  "custom/external-ip": {
+    "exec": "$HOME/.config/waybar/script/external-ip.sh",
+    "return-type": "json",
+    "interval": 300,
+    "tooltip": true,
+    "on-click": "$HOME/.config/waybar/script/click-external-ip.sh"
+  },
   "tray": {
     "icon-size": 12,
     "spacing": 12
@@ -250,12 +286,15 @@
   },
   "wlr/taskbar": {
     "format": "{icon}",
+    "icon-size": 16,
     "all-outputs": false,
     "active-first": true,
     "tooltip-format": "{name}",
     "on-click": "activate",
-    "icon-size": "12",
-    "on-click-middle": "close"
+    "on-click-middle": "close",
+    "app_ids-mapping": {
+      "chrome-teams.microsoft.com__v2_-Profile_2": "teams"
+    }
   },
   "custom/omarchy": {
     "format": "<span font='omarchy'>\ue900</span>",
@@ -264,9 +303,9 @@
     "tooltip-format": "Omarchy Menu\n\nSuper + Alt + Space"
   },
   "custom/update": {
-    "format": "",
+    "format": "update",
     "exec": "omarchy-update-available",
-    "on-click": "omarchy-launch-floating-terminal-with-presentation omarchy-update",
+    "on-click": "omarchy-launch-or-focus-tui omarchy-update",
     "tooltip-format": "Omarchy update available",
     "signal": 7,
     "interval": 3600
@@ -276,6 +315,7 @@
     "format": "MEM:{}%",
     "tooltip": true,
     "tooltip-format": "Memory Usage:{used} / {total} ({percentage}%)",
+    "on-click": "omarchy-launch-floating-terminal-with-presentation top -c -e m -o SHR",
     "max-length": 10
   },
   "cpu": {
@@ -388,7 +428,6 @@
     "return-type": "json"
   },
   "custom/teams-screen-sharing-indication": {
-    "on-click": "omarchy-cmd-screenrecord",
     "exec": "$HOME/.config/waybar/script/teams-screenshare.sh",
     "signal": 8,
     "return-type": "json"
