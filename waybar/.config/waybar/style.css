@@ -178,7 +178,6 @@
 #memory,
 #mpris,
 #network,
-#custom-notifications,
 #custom-power,
 #pulseaudio,
 #custom-spotify,
@@ -197,6 +196,7 @@
 #custom-sr_end,
 #custom-rl_end,
 #custom-rr_end,
+#custom-notification,
 #custom-gpu,
 #custom-tasks{
   color: @main-fg;
@@ -340,3 +340,55 @@ tooltip {
 #custom-tasks.empty {
   color: #a6e3a1;
 }
+
+/* Notification module with animations */
+@keyframes notification-pulse {
+  0% { 
+    opacity: 1;
+  }
+  50% { 
+    opacity: 0.6;
+  }
+  100% { 
+    opacity: 1;
+  }
+}
+
+#custom-notification {
+  min-width: 16px;
+  margin-left: 8px;
+  margin-right: 8px;
+  padding: 0px 4px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+/* When there are notifications - pulse animation */
+#custom-notification.notification,
+#custom-notification.dnd-notification,
+#custom-notification.inhibited-notification,
+#custom-notification.dnd-inhibited-notification {
+  color: #f9e2af;
+  animation: notification-pulse 2s ease-in-out infinite;
+}
+
+/* When there are no notifications - calm state */
+#custom-notification.none,
+#custom-notification.inhibited-none {
+  color: #89b4fa;
+}
+
+/* DND mode - dimmed */
+#custom-notification.dnd-none,
+#custom-notification.dnd-inhibited-none {
+  color: #6c7086;
+  opacity: 0.7;
+}
+
+/* Hover effect */
+#custom-notification:hover {
+  font-size: 16px;
+  color: #f5c2e7;
+}
+
+ 
