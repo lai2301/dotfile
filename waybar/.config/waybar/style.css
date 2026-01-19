@@ -27,8 +27,10 @@
 	padding-right: 8px;
 	padding-left: 8px;
 	border-radius: 50px;
-  margin: 8px;
-
+  margin-left: 8px;
+  margin-right: 8px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .modules-left {
@@ -176,7 +178,6 @@
 #memory,
 #mpris,
 #network,
-#custom-notifications,
 #custom-power,
 #pulseaudio,
 #custom-spotify,
@@ -195,7 +196,9 @@
 #custom-sr_end,
 #custom-rl_end,
 #custom-rr_end,
-#custom-gpu{
+#custom-notification,
+#custom-gpu,
+#custom-tasks{
   color: @main-fg;
   opacity: 1;
   margin: 4px 0px 4px 0px;
@@ -244,6 +247,7 @@
 
 tooltip {
   padding: 2px;
+  background: @main-bg;
 }
 
 #custom-update {
@@ -269,9 +273,122 @@ tooltip {
   color: #a55555;
 }
 
+/* Teams screen sharing indicator with blinking animation */
+@keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 0.3; }
+  100% { opacity: 1; }
+}
+
+#custom-teams-screen-sharing-indication {
+  min-width: 12px;
+  
+  margin-right: 8.75px;
+  font-size: 15px;
+  transition: all 0.3s ease;
+}
+
+#custom-teams-screen-sharing-indication.active {
+  color: #f38ba8;
+  animation: blink 1s ease-in-out infinite;
+}
+
+#custom-external-ip {
+  min-width: 12px;
+  margin-left: 8.75px;
+  margin-right: 8.75px;
+  font-size: 12px;
+  transition: all 0.3s ease;
+}
+
+#custom-external-ip.connected {
+  color: #89b4fa;
+}
+
+#custom-external-ip.connected:hover {
+  color: #b4befe;
+  font-size: 14px;
+}
+
+#custom-external-ip.disconnected {
+  color: #6c7086;
+  opacity: 0.6;
+}
+
 #cpu,
 #memory,
 #custom-gpu,
 #temperature {
   padding: 0px 5px;
 }
+
+#custom-tasks {
+  min-width: 30px;
+  margin: 0 7.5px;
+  padding: 0px 8px;
+  font-size: 14px;
+  color: #89b4fa;
+  transition: all 0.3s ease;
+}
+
+#custom-tasks:hover {
+  background: rgba(137, 180, 250, 0.1);
+  color: #f5c2e7;
+  font-size: 18px;
+}
+
+#custom-tasks.empty {
+  color: #a6e3a1;
+}
+
+/* Notification module with animations */
+@keyframes notification-pulse {
+  0% { 
+    opacity: 1;
+  }
+  50% { 
+    opacity: 0.6;
+  }
+  100% { 
+    opacity: 1;
+  }
+}
+
+#custom-notification {
+  min-width: 16px;
+  margin-left: 8px;
+  margin-right: 8px;
+  padding: 0px 4px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+/* When there are notifications - pulse animation */
+#custom-notification.notification,
+#custom-notification.dnd-notification,
+#custom-notification.inhibited-notification,
+#custom-notification.dnd-inhibited-notification {
+  color: #f9e2af;
+  animation: notification-pulse 2s ease-in-out infinite;
+}
+
+/* When there are no notifications - calm state */
+#custom-notification.none,
+#custom-notification.inhibited-none {
+  color: #89b4fa;
+}
+
+/* DND mode - dimmed */
+#custom-notification.dnd-none,
+#custom-notification.dnd-inhibited-none {
+  color: #6c7086;
+  opacity: 0.7;
+}
+
+/* Hover effect */
+#custom-notification:hover {
+  font-size: 16px;
+  color: #f5c2e7;
+}
+
+ 

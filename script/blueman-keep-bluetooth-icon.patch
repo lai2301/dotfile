@@ -1,0 +1,27 @@
+#!/bin/bash
+# Patch blueman to keep bluetooth icon instead of changing to battery icon
+# This prevents the icon from disappearing when battery status updates
+
+BLUEMAN_FILE="/usr/lib/python3.13/site-packages/blueman/plugins/applet/ConnectionNotifier.py"
+BACKUP_FILE="${BLUEMAN_FILE}.backup"
+
+echo "Patching blueman ConnectionNotifier to keep bluetooth icon..."
+
+# Create backup if it doesn't exist
+if [ ! -f "$BACKUP_FILE" ]; then
+    echo "Creating backup..."
+    sudo cp "$BLUEMAN_FILE" "$BACKUP_FILE"
+fi
+
+# Apply patch: Comment out the line that changes icon to "battery"
+sudo sed -i 's/^\(\s*\)notification\.set_notification_icon("battery")/\1# notification.set_notification_icon("battery")  # Patched: Keep original bluetooth icon/' "$BLUEMAN_FILE"
+
+echo "Patch applied! Restarting blueman-applet..."
+pkill blueman-applet
+sleep 1
+blueman-applet &
+
+echo "Done! The bluetooth icon should now persist in notifications."
+echo ""
+echo "To revert: sudo cp $BACKUP_FILE $BLUEMAN_FILE && pkill blueman-applet && blueman-applet &"
+

@@ -8,8 +8,6 @@
 
 set -euo pipefail   # safer Bash defaults
 
-BASE_PATH="/home/lai2301"
-
 # Default path: ~/Downloads.  If the user selects nothing, we fall back to this.
 DEFAULT_DIR="${HOME}/Downloads"
 
@@ -91,8 +89,8 @@ if [[ -n "$target_paths" ]]; then
     echo "Selected: $target_paths"
 
     go-fifimove \
-        -config="$BASE_PATH/script/env_file/Paths_fifimove.yaml" \
-        -log="$BASE_PATH/Documents/log_script/fifimove-log-$(date '+%Y%m%d%H%M').log" \
+        -config="$HOME/script/env_file/Paths_fifimove.yaml" \
+        -log="$HOME/Documents/log_script/fifimove-log-$(date '+%Y%m%d%H%M').log" \
         -src=$target_paths
 
     omarchy-show-done
